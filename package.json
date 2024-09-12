@@ -1,0 +1,15 @@
+{
+  "name": "phonebook",
+  "version": "1.0.0",
+  "description": "fullstackopen 的学习目录，用于 Part3 及之后的 phonebook 项目后端",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.20.0"
+  }
+}
