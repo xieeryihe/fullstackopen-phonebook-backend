@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
 
 persons = [
     {
@@ -57,6 +58,29 @@ app.delete('/api/persons/:id', ({ params: { id } }, response) => {
         response.status(404).send(`Person with id ${person_id} not exist.`)
     }
 })
+
+app.post('/api/persons', (request, response) => {
+    const person = request.body
+    console.log(person);
+    
+    if (!person.name) {
+        return response.status(400).json({
+          error: 'content missing'
+        })
+    }
+    let new_id = 0
+    while (true) {
+        new_id = Math.floor(Math.random() * 1000000) // 随机生成一个 id
+        const p = persons.find(person => person.id === new_id)
+        if (!p) break
+    }
+    const newPerson = {
+        id: new_id,
+        ...person
+    }
+    persons = persons.concat(newPerson)
+    response.json(person)
+  })
 
 const port = 3001
 app.listen(port, () => {
