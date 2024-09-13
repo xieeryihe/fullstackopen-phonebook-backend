@@ -30,7 +30,7 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
+    const id = Number(request.params.id)  // 如果 id 不为数字，则会返回 NaN
     const person = persons.find(person => person.id === id)
     if (person) {
         response.json(person)
@@ -46,6 +46,16 @@ app.get('/info', (request, response) => {
         <div>Phonebook has info for ${persons.length} people.</div>
         <div>${requestTime}</div>    
     `)
+})
+
+app.delete('/api/persons/:id', ({ params: { id } }, response) => {
+    const person_id = Number(id)
+    if (person_id) {
+        persons = persons.filter(person => person.id !== person_id)
+        response.status(204).send(`Delete person with id ${person_id} success.`)
+    } else {
+        response.status(404).send(`Person with id ${person_id} not exist.`)
+    }
 })
 
 const port = 3001
