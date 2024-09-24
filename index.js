@@ -67,7 +67,16 @@ app.post('/api/persons', (request, response) => {
         return response.status(400).json({
           error: 'content missing'
         })
+    } else if (!person.number) {
+        return response.status(400).json({
+          error: 'number missing'
+        })
+    } else if (persons.find(p => p.name === person.name)) {
+        return response.status(400).json({
+          error: 'name must be unique'
+        })
     }
+    
     let new_id = 0
     while (true) {
         new_id = Math.floor(Math.random() * 1000000) // 随机生成一个 id
